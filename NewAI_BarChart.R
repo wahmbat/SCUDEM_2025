@@ -1,3 +1,5 @@
+library(betareg)
+library(tidyverse)
 data <- read.csv("AAR_data.csv")
 names(data) <- c("x","y")
 data$y <- data$y/100
@@ -9,8 +11,8 @@ extrapolation <- data.frame(x = seq(1, 39, 5))
 extrapolation$y <- predict(model, newdata = extrapolation, type = "response")
 
 chat <- data.frame(x=extrapolation[,1],y=extrapolation[,2] * 1380000 * (60.7/(60.7+14+13.5)))
-gemini <- data.frame(x=extrapolation[,1],y=extrapolation[,2] * 1380000 * (14/(60.7+14+13.5)))
-copilot <- data.frame(x=extrapolation[,1],y=extrapolation[,2] * 1380000 * (13.5/(60.7+14+13.5)))
+gemini <- data.frame(x=extrapolation[,1],y=extrapolation[,2] * 1380000 * (13.5/(60.7+14+13.5)))
+copilot <- data.frame(x=extrapolation[,1],y=extrapolation[,2] * 1380000 * (14/(60.7+14+13.5)))
 human <- data.frame(x=extrapolation[,1],y=(1-extrapolation[,2]) * 1380000)
 
 chat <- mutate(chat,Source="ChatGPT")
